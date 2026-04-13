@@ -17,11 +17,6 @@ const nextConfig = {
     buildActivity: false,
     buildActivityPosition: 'bottom-right',
   },
-  // GitHub Pages configuration - Update 'portfolio_2' to your actual repository name
-  basePath: process.env.NODE_ENV === 'production' ? '/portfolio_2' : '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/portfolio_2/' : '',
-  trailingSlash: true,
-  output: 'export',
 }
 
 export default nextConfig
