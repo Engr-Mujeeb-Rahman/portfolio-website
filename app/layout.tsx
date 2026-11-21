@@ -1,37 +1,42 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Space_Grotesk } from 'next/font/google'
+import { Inter, Plus_Jakarta_Sans } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const inter = Inter({ 
-  subsets: ["latin"],
+const inter = Inter({
+  subsets: ['latin'],
   variable: '--font-inter',
   display: 'swap',
-});
+})
 
-const spaceGrotesk = Space_Grotesk({ 
-  subsets: ["latin"],
-  variable: '--font-space-grotesk',
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-jakarta',
+  weight: ['600', '700', '800'],
   display: 'swap',
-});
+})
+
+const title = 'Muhammad Mujeeb Ur Rahman — AI & Computer Vision Engineer'
+const description =
+  'AI and computer vision engineer building LLM applications, RAG pipelines, AI agents and machine learning systems.'
 
 export const metadata: Metadata = {
-  title: 'Muhammad Mujeeb Ur Rahman | AI Engineer',
-  description: 'AI Engineer specializing in LLM systems, RAG pipelines, AI agents, and machine learning. Building intelligent systems that think, learn, and automate.',
-  keywords: ['AI Engineer', 'Machine Learning', 'LLM', 'RAG Systems', 'AI Agents', 'Deep Learning', 'Python', 'LangChain'],
+  title,
+  description,
+  keywords: ['AI Engineer', 'Computer Vision', 'Machine Learning', 'LLM', 'RAG', 'AI Agents', 'Deep Learning', 'Python'],
   authors: [{ name: 'Muhammad Mujeeb Ur Rahman' }],
   creator: 'Muhammad Mujeeb Ur Rahman',
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    title: 'Muhammad Mujeeb Ur Rahman | AI Engineer',
-    description: 'AI Engineer specializing in LLM systems, RAG pipelines, AI agents, and machine learning.',
-    siteName: 'Mujeeb Rahman Portfolio',
+    title,
+    description,
+    siteName: 'Muhammad Mujeeb Ur Rahman',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Muhammad Mujeeb Ur Rahman | AI Engineer',
-    description: 'AI Engineer specializing in LLM systems, RAG pipelines, AI agents, and machine learning.',
+    title,
+    description,
   },
   robots: {
     index: true,
@@ -40,7 +45,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#05070d',
+  themeColor: '#ffffff',
   width: 'device-width',
   initialScale: 1,
 }
@@ -51,7 +56,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang="en" className={`${inter.variable} ${jakarta.variable}`}>
       <body className="font-sans antialiased">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}

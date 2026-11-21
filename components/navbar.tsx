@@ -1,114 +1,103 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Menu, X, Download } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { useEffect, useState } from "react"
+import { Download, Menu, X } from "lucide-react"
 
 const navLinks = [
-  { name: "Home", href: "#home" },
   { name: "About", href: "#about" },
   { name: "Experience", href: "#experience" },
+  { name: "Projects", href: "#projects" },
   { name: "Skills", href: "#skills" },
   { name: "Services", href: "#services" },
-  { name: "Projects", href: "#projects" },
   { name: "Contact", href: "#contact" },
 ]
 
 export function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+    const onScroll = () => setScrolled(window.scrollY > 10)
+    onScroll()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-[#05070d]/90 backdrop-blur-xl border-b border-[#00e5ff]/10"
-          : "bg-transparent"
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        scrolled || open
+          ? "bg-white/90 shadow-[0_1px_0_0_rgb(226_232_240),0_8px_24px_-12px_rgba(15,23,42,0.12)] backdrop-blur-md"
+          : "bg-white"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <a href="#home" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#00e5ff] to-[#3b82f6] flex items-center justify-center">
-              <span className="text-[#05070d] font-bold text-lg font-mono">M</span>
-            </div>
-            <span className="text-[#cbd5e1] font-semibold text-lg hidden sm:block group-hover:text-[#00e5ff] transition-colors">
-              Mujeeb
-            </span>
-          </a>
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8 md:h-[72px]">
+        <a href="#home" className="flex items-center gap-2.5">
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 font-display text-base font-extrabold text-white shadow-md shadow-blue-600/30">
+            M
+          </span>
+          <span className="font-display text-[17px] font-bold tracking-tight text-slate-900">
+            Mujeeb<span className="text-blue-600">.</span>
+          </span>
+        </a>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="px-4 py-2 text-sm text-[#cbd5e1]/80 hover:text-[#00e5ff] transition-colors relative group"
-              >
-                {link.name}
-                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-[#00e5ff] group-hover:w-1/2 transition-all duration-300" />
-              </a>
-            ))}
-          </div>
-
-          {/* CTA Button */}
-          <div className="hidden md:block">
-            <Button
-              asChild
-              className="bg-gradient-to-r from-[#00e5ff] to-[#3b82f6] text-[#05070d] font-semibold hover:shadow-lg hover:shadow-[#00e5ff]/25 transition-all duration-300"
-            >
-              <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
-                <Download className="w-4 h-4 mr-2" />
-                Download CV
-              </a>
-            </Button>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 text-[#cbd5e1] hover:text-[#00e5ff] transition-colors"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      <div
-        className={`md:hidden transition-all duration-300 overflow-hidden ${
-          isMobileMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-        }`}
-      >
-        <div className="bg-[#05070d]/95 backdrop-blur-xl border-t border-[#00e5ff]/10 px-4 py-4">
+        <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              className="block py-3 text-[#cbd5e1]/80 hover:text-[#00e5ff] transition-colors border-b border-[#00e5ff]/5 last:border-0"
-              onClick={() => setIsMobileMenuOpen(false)}
+              className="rounded-lg px-3.5 py-2 text-[15px] font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900"
             >
               {link.name}
             </a>
           ))}
-          <Button
-            asChild
-            className="w-full mt-4 bg-gradient-to-r from-[#00e5ff] to-[#3b82f6] text-[#05070d] font-semibold"
+        </nav>
+
+        <div className="hidden lg:block">
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition-all hover:-translate-y-0.5 hover:bg-blue-700"
           >
-            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">Download CV</a>
-          </Button>
+            <Download className="h-4 w-4" />
+            Download CV
+          </a>
         </div>
+
+        <button
+          className="-mr-2 rounded-lg p-2 text-slate-800 hover:bg-slate-100 lg:hidden"
+          onClick={() => setOpen(!open)}
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+        >
+          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </button>
       </div>
-    </nav>
+
+      {open && (
+        <nav className="border-t border-slate-200 bg-white px-4 pb-5 pt-2 lg:hidden" aria-label="Mobile">
+          {navLinks.map((link) => (
+            <a
+              key={link.name}
+              href={link.href}
+              onClick={() => setOpen(false)}
+              className="block rounded-lg px-3 py-3 text-[15px] font-medium text-slate-700 hover:bg-slate-50"
+            >
+              {link.name}
+            </a>
+          ))}
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-blue-600 py-3 text-sm font-semibold text-white"
+          >
+            <Download className="h-4 w-4" />
+            Download CV
+          </a>
+        </nav>
+      )}
+    </header>
   )
 }

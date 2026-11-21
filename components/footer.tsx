@@ -1,91 +1,65 @@
-"use client"
+import { Github, Linkedin, Mail } from "lucide-react"
+import { Container } from "@/components/section"
 
-import { useState, useEffect } from "react"
-import { Github, Linkedin, Mail, Heart } from "lucide-react"
-
-const footerLinks = [
-  { name: "Home", href: "#home" },
+const nav = [
   { name: "About", href: "#about" },
-  { name: "Services", href: "#services" },
+  { name: "Experience", href: "#experience" },
   { name: "Projects", href: "#projects" },
+  { name: "Skills", href: "#skills" },
   { name: "Contact", href: "#contact" },
 ]
 
-const socialLinks = [
+const socials = [
   { icon: Github, href: "https://github.com/Engr-Mujeeb-Rahman", label: "GitHub" },
   { icon: Linkedin, href: "https://www.linkedin.com/in/muhammad-mujeeb-ur-rahman-se/", label: "LinkedIn" },
   { icon: Mail, href: "mailto:mujeebbadwan1155@gmail.com", label: "Email" },
 ]
 
 export function Footer() {
-  const [currentYear, setCurrentYear] = useState(2026)
-
-  useEffect(() => {
-    setCurrentYear(new Date().getFullYear())
-  }, [])
-
   return (
-    <footer className="relative py-12 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-[#05070d]" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#00e5ff]/30 to-transparent" />
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-          {/* Logo */}
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#00e5ff] to-[#3b82f6] flex items-center justify-center">
-              <span className="text-[#05070d] font-bold text-lg font-mono">M</span>
-            </div>
-            <span className="text-[#cbd5e1] font-semibold text-lg">Mujeeb</span>
+    <footer className="bg-slate-950 text-slate-400">
+      <Container className="py-12">
+        <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+          <div>
+            <a href="#home" className="flex items-center gap-2.5">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 font-display font-extrabold text-white">
+                M
+              </span>
+              <span className="font-display text-lg font-bold text-white">
+                Mujeeb<span className="text-blue-500">.</span>
+              </span>
+            </a>
+            <p className="mt-3 max-w-xs text-sm">AI &amp; Computer Vision Engineer building practical, production-ready AI systems.</p>
           </div>
 
-          {/* Navigation Links */}
-          <nav className="flex flex-wrap justify-center gap-6">
-            {footerLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="text-sm text-[#cbd5e1]/60 hover:text-[#00e5ff] transition-colors"
-              >
-                {link.name}
+          <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium" aria-label="Footer">
+            {nav.map((l) => (
+              <a key={l.name} href={l.href} className="transition-colors hover:text-white">
+                {l.name}
               </a>
             ))}
           </nav>
 
-          {/* Social Links */}
-          <div className="flex gap-3">
-            {socialLinks.map((social, index) => {
-              const Icon = social.icon
-              return (
-                <a
-                  key={index}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-lg glass-card flex items-center justify-center text-[#cbd5e1]/60 hover:text-[#00e5ff] hover:border-[#00e5ff]/30 transition-all"
-                  aria-label={social.label}
-                >
-                  <Icon className="w-5 h-5" />
-                </a>
-              )
-            })}
+          <div className="flex gap-2.5">
+            {socials.map(({ icon: Icon, href, label }) => (
+              <a
+                key={label}
+                href={href}
+                target={href.startsWith("mailto") ? undefined : "_blank"}
+                rel="noopener noreferrer"
+                aria-label={label}
+                className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 text-slate-300 ring-1 ring-white/10 transition-colors hover:bg-blue-600 hover:text-white"
+              >
+                <Icon className="h-[18px] w-[18px]" />
+              </a>
+            ))}
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="my-8 h-px bg-[#00e5ff]/10" />
-
-        {/* Copyright */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-[#cbd5e1]/50">
-          <p>
-            &copy; Copyright 2023 – {currentYear} All Rights Reserved.
-          </p>
-          <p className="flex items-center gap-1">
-            Made with <Heart className="w-4 h-4 text-[#ef4444]" /> by Muhammad Mujeeb Ur Rahman
-          </p>
+        <div className="mt-10 border-t border-white/10 pt-6 text-sm">
+          © {new Date().getFullYear()} Muhammad Mujeeb Ur Rahman. All rights reserved.
         </div>
-      </div>
+      </Container>
     </footer>
   )
 }
